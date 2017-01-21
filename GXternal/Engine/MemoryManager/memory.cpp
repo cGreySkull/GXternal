@@ -79,12 +79,14 @@ DWORD cMemoryManager::refScan(sModule module, BYTE* address) {
 		if (bytes[i] == address[0]) {
 			for (unsigned int x = 0;; x++) {
 				if (x == 5) {
+					VirtualFree(bytes, 0, MEM_RELEASE);
 					return module.base + i;
 				}
 				if (bytes[i + x] == address[x])continue; else break;
 			}
 		}
 	}
+	VirtualFree(bytes, 0, MEM_RELEASE);
 	return NULL;
 }
 
